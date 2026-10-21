@@ -1,0 +1,9 @@
+{
+  "branch": "ci/run-tests",
+  "title": "Run the tests on every push",
+  "description": "## What this does\n\n- Adds `.github/workflows/test.yml`. GitHub Actions runs every test on every push and pull request, and keeps the results as a file named `test-results`.\n- Adds a new test, `home page escapes the visitor name`.\n\nThe new test fails on purpose. It found a real problem in `src/site.js`. Fix the code, not the test.\n",
+  "files": {
+    ".github/workflows/test.yml": "# Runs every test on every push and every pull request, and keeps the results.\nname: Tests\n\non:\n  push:\n  pull_request:\n\npermissions:\n  contents: read\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v7\n      - uses: actions/setup-node@v7\n        with:\n          node-version: 24\n          package-manager-cache: false\n      - name: Run the tests\n        run: node --test --test-reporter=spec --test-reporter=junit --test-reporter-destination=stdout --test-reporter-destination=test-results.xml\n      - name: Keep the test results\n        if: always()\n        uses: actions/upload-artifact@v7\n        with:\n          name: test-results\n          path: test-results.xml\n",
+    "test/escape.test.js": "const test = require(\"node:test\");\nconst assert = require(\"node:assert/strict\");\nconst { renderHome } = require(\"../src/site\");\n\n// A visitor can type anything into ?name=. The page must show it as text, never run it.\ntest(\"home page escapes the visitor name\", () => {\n  const page = renderHome('<script>alert(\"hi\")</script>');\n  assert.ok(!page.includes(\"<script>\"), \"the page must not contain a script tag from the visitor\");\n  assert.ok(page.includes(\"&lt;script&gt;\"), \"the visitor's text must be shown as text\");\n});\n"
+  }
+}

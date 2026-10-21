@@ -1,0 +1,10 @@
+{
+  "name": "digilearn-starter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A tiny website for the IT DigiLearn AI Enablement course.",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  }
+}
