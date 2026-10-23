@@ -1,0 +1,2 @@
+# Every text file is stored and checked out with LF line endings, on Windows too, so a diff shows only the real change.
+* text=auto eol=lf
