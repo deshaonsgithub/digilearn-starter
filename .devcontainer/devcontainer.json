@@ -1,0 +1,15 @@
+{
+  // GitHub Codespaces: the whole course in the browser, nothing to install.
+  // Node.js 24 (the LTS the course uses) with git and npm, on the smallest 2-core machine.
+  "name": "IT DigiLearn starter",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:5-24",
+  "hostRequirements": {
+    "cpus": 2
+  },
+  "portsAttributes": {
+    "3000": {
+      "label": "Site",
+      "onAutoForward": "notify"
+    }
+  }
+}
